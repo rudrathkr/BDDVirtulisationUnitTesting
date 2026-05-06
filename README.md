@@ -666,4 +666,6 @@ mvn clean install
 open target/cucumber-report.html
 ```
 
-Happy Testing! 🎉
+## Report
+
+<img width="1538" height="857" alt="Screenshot 2026-05-06 at 5 32 16 PM" src="https://github.com/user-attachments/assets/0d1cbe4a-6a85-4800-ae44-1841a91415bf" />
