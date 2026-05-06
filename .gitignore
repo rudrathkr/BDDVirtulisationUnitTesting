@@ -1,0 +1,241 @@
+# Maven build output
+target/
+*.jar
+*.war
+*.ear
+
+# IDE - IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# IDE - VS Code
+.vscode/
+*.code-workspace
+
+# IDE - Eclipse
+.classpath
+.project
+.settings/
+.metadata/
+bin/
+
+# IDE - NetBeans
+nbproject/
+.nb-gradle/
+
+# IDE - Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# IDE - Vim
+*.swp
+*.swo
+*~
+.vim/
+
+# IDE - Emacs
+*~
+\#*\#
+.\#*
+
+# OS - macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# OS - Windows
+Thumbs.db
+Desktop.ini
+.lnk
+
+# OS - Linux
+.directory
+.Trash-*
+
+# Java
+*.class
+*.log
+*.ctxt
+*.lock
+*.lcks
+
+# Gradle
+.gradle
+.gradletasknamecache
+gradle-app.setting
+gradle-wrapper.jar
+
+# Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+pom.xml.bak
+release.properties
+.flattened-pom.xml
+
+# STS (Spring Tool Suite)
+.sts4-cache/
+
+# IntelliJ
+*.iml
+.idea_modules/
+
+# vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+*.h2.db
+
+# Test reports and logs
+surefire-reports/
+failsafe-reports/
+cucumber-report.html
+cucumber-report.json
+test-results/
+coverage/
+.coverage
+htmlcov/
+
+# Build directories
+build/
+dist/
+*.o
+*.a
+*.so
+
+# Compiled Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Node modules (if applicable)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Package managers
+.m2/
+.npm
+.yarn
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.backup
+*~
+
+# Log files
+*.log
+logs/
+*.out
+
+# System files
+.DS_Store
+Thumbs.db
+.gitkeep
+
+# Project specific files
+*.properties.local
+local.properties
+settings.xml
+
+# Generated files
+.generated/
+generated-sources/
+generated-test-sources/
+
+# JetBrains
+.idea/
+*.iml
+
+# Checkstyle
+.checkstyle
+
+# PMD
+.pmd
+.pmdruleset.xml
+
+# FindBugs
+.fbprefs
+
+# Sonar
+.sonarqube/
+.sonar/
+
+# JaCoCo
+.jacoco/
+
+# Misc
+.classpath
+.c9/
+*.seed
+*.pid.lock
+.vuepress/dist
+.cache-loader
+.tern-port
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Docker
+docker-compose.override.yml
+.docker/
+.dockerignore
+
+# Kubernetes
+k8s-local/
+helm/values.local.yaml
+
+# CI/CD
+.github/workflows/local/
+.gitlab-ci.local.yml
+.travis.local.yml
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+*.bz2
+
+# Lock files (optional - uncomment if needed)
+# *.lock
+# package-lock.json
+# yarn.lock
+
+# Dependency directories (optional - uncomment if needed)
+# node_modules/
+# .bundle/
+# vendor/bundle/
+
+# OS-generated files
+.Thumbs.db
+.directory
+ehthumbs.db
+
