@@ -12,6 +12,8 @@
     <properties>
         <java.version>17</java.version>
         <maven.compiler.release>17</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <cucumber.version>7.18.1</cucumber.version>
         <junit.version>5.10.3</junit.version>
@@ -21,7 +23,9 @@
         <jackson.version>2.17.2</jackson.version>
         <jsonassert.version>1.5.3</jsonassert.version>
         <xmlunit.version>2.10.0</xmlunit.version>
-        <slf4j.version>2.0.13</slf4j.version>
+        <fongo.version>2.0.12</fongo.version>
+        <mongo.driver.version>3.4.1</mongo.driver.version>
+        <slf4j.version>1.7.36</slf4j.version>
     </properties>
 
     <dependencies>
@@ -124,6 +128,20 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Fongo (in-memory MongoDB for testing) -->
+        <dependency>
+            <groupId>com.github.fakemongo</groupId>
+            <artifactId>fongo</artifactId>
+            <version>${fongo.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>${mongo.driver.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -155,8 +173,12 @@
                         <include>**/*Test.java</include>
                         <include>**/*Runner.java</include>
                     </includes>
+                    <excludes>
+                        <exclude>**/MongoVirtualizationTest.java</exclude>
+                    </excludes>
                     <systemPropertyVariables>
                         <cucumber.plugin>pretty, html:target/cucumber-report.html, json:target/cucumber-report.json</cucumber.plugin>
+                        <org.slf4j.simpleLogger.defaultLogLevel>warn</org.slf4j.simpleLogger.defaultLogLevel>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>

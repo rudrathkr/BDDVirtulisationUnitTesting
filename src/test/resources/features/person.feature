@@ -39,3 +39,20 @@ Feature: Validate person information using local virtualized integrations
     Given Message queue is available
     When Person message "Rudra Thakur created" is published
     Then Person message "Rudra Thakur created" should be consumed
+
+  @Mongo
+  Scenario: Insert and count records using virtualized MongoDB
+    Given Mongo collection has no persons
+    And User inserted person information into Mongo collection
+      |FirstName|LastName|Profession|LocationX|LocationY|CompanyOrg      |CompanyHeadQuarters|
+      |Rudra    |Thakur  |IT        |100      |150      |Cognizant USA   |Akron              |
+      |Raj      |Kumar   |Auto      |200      |250      |Cognizant London|London             |
+    Then Check if there are "2" users in the Mongo collection
+
+  @Mongo
+  Scenario: Find company organization by person name using virtualized MongoDB
+    Given Mongo collection has no persons
+    And User inserted person information into Mongo collection
+      |FirstName|LastName|Profession|LocationX|LocationY|CompanyOrg      |CompanyHeadQuarters|
+      |Raj      |Kumar   |Auto      |200      |250      |Cognizant London|London             |
+    Then Company organization for Mongo user "Raj" and "Kumar" should be "Cognizant London"

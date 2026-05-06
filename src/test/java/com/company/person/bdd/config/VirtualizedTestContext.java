@@ -1,9 +1,11 @@
 package com.company.person.bdd.config;
 
 import com.company.person.bdd.db.TestDatabaseInitializer;
+import com.company.person.bdd.mongo.FongoMongoConfig;
 import com.company.person.bdd.mq.EmbeddedActiveMqConfig;
 import com.company.person.bdd.rest.WireMockStubs;
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.mongodb.DB;
 import org.h2.jdbcx.JdbcDataSource;
 
 import javax.sql.DataSource;
@@ -27,6 +29,7 @@ public final class VirtualizedTestContext {
         }
 
         startDatabase();
+        startMongoDatabase();
         startRestVirtualization();
         startMessageQueue();
 
@@ -44,6 +47,10 @@ public final class VirtualizedTestContext {
         dataSource = ds;
 
         TestDatabaseInitializer.runScript(dataSource, "db/schema.sql");
+    }
+
+    private static void startMongoDatabase() {
+        FongoMongoConfig.start();
     }
 
     private static void startRestVirtualization() {
@@ -69,11 +76,17 @@ public final class VirtualizedTestContext {
             activeMqConfig.stop();
         }
 
+        FongoMongoConfig.stop();
+
         started = false;
     }
 
     public static DataSource dataSource() {
         return dataSource;
+    }
+
+    public static DB mongoDatabase() {
+        return FongoMongoConfig.database();
     }
 
     public static String restBaseUrl() {

@@ -1,6 +1,7 @@
 package com.company.person.bdd.steps;
 
 import com.company.person.bdd.config.VirtualizedTestContext;
+import com.company.person.bdd.mongo.MongoPersonRepository;
 import com.company.person.bdd.mq.PersonMessageConsumer;
 import com.company.person.bdd.mq.PersonMessageProducer;
 import com.company.person.client.PersonRestClient;
@@ -26,6 +27,9 @@ public class PersonSteps {
     private final PersonRepository repository =
             new PersonRepository(VirtualizedTestContext.dataSource());
 
+    private final MongoPersonRepository mongoRepository =
+            new MongoPersonRepository(VirtualizedTestContext.mongoDatabase());
+
     private final PersonRestClient restClient =
             new PersonRestClient(VirtualizedTestContext.restBaseUrl());
 
@@ -47,17 +51,7 @@ public class PersonSteps {
         List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
 
         for (Map<String, String> row : rows) {
-            Person person = new Person(
-                    row.get("FirstName").trim(),
-                    row.get("LastName").trim(),
-                    row.get("Profession").trim(),
-                    Integer.parseInt(row.get("LocationX").trim()),
-                    Integer.parseInt(row.get("LocationY").trim()),
-                    row.get("CompanyOrg").trim(),
-                    row.get("CompanyHeadQuarters").trim()
-            );
-
-            repository.insert(person);
+            repository.insert(personFrom(row));
         }
     }
 
@@ -124,7 +118,45 @@ public class PersonSteps {
         assertEquals(expectedMessage, actualMessage);
     }
 
+    @Given("Mongo collection has no persons")
+    public void mongoCollectionHasNoPersons() {
+        mongoRepository.deleteAll();
+    }
+
+    @Given("User inserted person information into Mongo collection")
+    public void userInsertedPersonInformationIntoMongoCollection(DataTable dataTable) {
+        List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+
+        for (Map<String, String> row : rows) {
+            mongoRepository.insert(personFrom(row));
+        }
+    }
+
+    @Then("Check if there are {string} users in the Mongo collection")
+    public void checkIfThereAreUsersInTheMongoCollection(String expectedCount) {
+        int actualCount = mongoRepository.count();
+        assertEquals(Integer.parseInt(expectedCount), actualCount);
+    }
+
+    @Then("Company organization for Mongo user {string} and {string} should be {string}")
+    public void companyOrganizationForMongoUserShouldBe(String firstName, String lastName, String expectedOrg) {
+        String actualOrg = mongoRepository.findCompanyOrgByName(firstName.trim(), lastName.trim());
+        assertEquals(expectedOrg, actualOrg);
+    }
+
     private String readExpectedFile(String fileName) throws Exception {
         return Files.readString(Path.of("src/test/resources/expected", fileName));
+    }
+
+    private Person personFrom(Map<String, String> row) {
+        return new Person(
+                row.get("FirstName").trim(),
+                row.get("LastName").trim(),
+                row.get("Profession").trim(),
+                Integer.parseInt(row.get("LocationX").trim()),
+                Integer.parseInt(row.get("LocationY").trim()),
+                row.get("CompanyOrg").trim(),
+                row.get("CompanyHeadQuarters").trim()
+        );
     }
 }
